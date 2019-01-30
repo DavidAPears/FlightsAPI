@@ -12,15 +12,17 @@ app.get('/flights', (req, res) => {
       });
     });
 
-
-    // if (err) throw err;
-    //   var dbo = db.db("mydb");
-    //   dbo.collection("customers").find({}).toArray(function(err, result) {
-    //     if (err) throw err;
-    //     console.log(result);
-    //     db.close();
-
-
+app.get('/flights/:flightNo', (req, res) => {
+  const flightNo = req.params.flightNo;
+    db.collection('flights').findOne({ FlightNo: flightNo}, (err, item) => {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+        } else {
+          res.send(item);
+          console.log("Find:", item);
+        }
+      });
+    });
 
 app.get('/flights/:id', (req, res) => {
   const id = req.params.id;
