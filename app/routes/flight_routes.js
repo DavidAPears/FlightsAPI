@@ -1,6 +1,7 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
 
+// FIND ALL FLIGHTS:
 app.get('/flights', (req, res) => {
     db.collection('flights').find({}).toArray(function(err, result) {
       if (err) {
@@ -11,8 +12,26 @@ app.get('/flights', (req, res) => {
         }
       });
     });
+// END POINT EXAMPLE: "localhost:8000/flights"
 
-app.get('/flights/:flightNo', (req, res) => {
+
+// FIND ALL DEPARTURES:
+app.get('/flights/departures', (req, res) => {
+  const type = "D"
+    db.collection('flights').find({ ArrDep: type}).toArray(function(err, items)  {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+        } else {
+          res.send(items);
+          console.log("Find:", items);
+        }
+      });
+    });
+// END POINT EXAMPLE: "localhost:8000/flights/departures"
+
+
+// FIND BY FLIGHT NUMBER:
+app.get('/flights/flight/:flightNo', (req, res) => {
   const flightNo = req.params.flightNo;
     db.collection('flights').findOne({ FlightNo: flightNo}, (err, item) => {
       if (err) {
@@ -23,7 +42,10 @@ app.get('/flights/:flightNo', (req, res) => {
         }
       });
     });
+// END POINT EXAMPLE: "localhost:8000/flights/flight/UX3613"
 
+
+// FIND BY ID:
 app.get('/flights/:id', (req, res) => {
   const id = req.params.id;
   const details = { '_id': new ObjectID(id) };
@@ -35,19 +57,10 @@ app.get('/flights/:id', (req, res) => {
       }
     });
   });
+// END POINT EXAMPLE: "localhost:8000/flights/5c51ba60f428dc3d24b05273"
 
-app.delete('/flights/:id', (req, res) => {
-    const id = req.params.id;
-    const details = { '_id': new ObjectID(id) };
-    db.collection('flights').remove(details, (err, item) => {
-      if (err) {
-        res.send({'error':'An error has occurred'});
-      } else {
-        res.send('Flight ' + id + ' deleted!');
-      }
-    });
-  });
 
+// ADD FLIGHT:
 app.put('/flights/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
@@ -73,6 +86,7 @@ app.put('/flights/:id', (req, res) => {
     });
   });
 
+//EDIT FLIGHT:
 app.post('/flights', (req, res) => {
   const flight = {
     FlightNo:   req.body.FlightNo,
