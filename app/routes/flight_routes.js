@@ -1,6 +1,27 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
 
+app.get('/flights', (req, res) => {
+    db.collection('flights').find({}).toArray(function(err, result) {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+        } else {
+          res.send(result);
+          console.log("Find:", result);
+        }
+      });
+    });
+
+
+    // if (err) throw err;
+    //   var dbo = db.db("mydb");
+    //   dbo.collection("customers").find({}).toArray(function(err, result) {
+    //     if (err) throw err;
+    //     console.log(result);
+    //     db.close();
+
+
+
 app.get('/flights/:id', (req, res) => {
   const id = req.params.id;
   const details = { '_id': new ObjectID(id) };
