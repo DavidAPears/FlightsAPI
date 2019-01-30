@@ -42,7 +42,7 @@ app.get('/flights/arrivals', (req, res) => {
         }
       });
     });
-// END POINT EXAMPLE: "localhost:8000/flights/departures"
+// END POINT EXAMPLE: "localhost:8000/flights/arrivals"
 
 
 // FIND BY FLIGHT NUMBER:
