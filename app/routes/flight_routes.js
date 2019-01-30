@@ -30,6 +30,21 @@ app.get('/flights/departures', (req, res) => {
 // END POINT EXAMPLE: "localhost:8000/flights/departures"
 
 
+// FIND ALL ARRIVALS:
+app.get('/flights/arrivals', (req, res) => {
+  const type = "A"
+    db.collection('flights').find({ ArrDep: type}).toArray(function(err, items)  {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+        } else {
+          res.send(items);
+          console.log("Find:", items);
+        }
+      });
+    });
+// END POINT EXAMPLE: "localhost:8000/flights/departures"
+
+
 // FIND BY FLIGHT NUMBER:
 app.get('/flights/flight/:flightNo', (req, res) => {
   const flightNo = req.params.flightNo;
