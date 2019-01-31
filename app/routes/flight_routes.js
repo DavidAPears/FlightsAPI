@@ -1,6 +1,13 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 // FIND ALL FLIGHTS:
 app.get('/flights', (req, res) => {
     db.collection('flights').find({}).toArray(function(err, result) {
@@ -8,7 +15,6 @@ app.get('/flights', (req, res) => {
         res.send({'error':'An error has occurred'});
         } else {
           res.send(result);
-          console.log("Find:", result);
         }
       });
     });
@@ -23,7 +29,6 @@ app.get('/flights/departures', (req, res) => {
         res.send({'error':'An error has occurred'});
         } else {
           res.send(items);
-          console.log("Find:", items);
         }
       });
     });
@@ -38,7 +43,6 @@ app.get('/flights/arrivals', (req, res) => {
         res.send({'error':'An error has occurred'});
         } else {
           res.send(items);
-          console.log("Find:", items);
         }
       });
     });
@@ -53,7 +57,6 @@ app.get('/flights/flight/:flightNo', (req, res) => {
         res.send({'error':'An error has occurred'});
         } else {
           res.send(item);
-          console.log("Find:", item);
         }
       });
     });
@@ -100,6 +103,8 @@ app.put('/flights/:id', (req, res) => {
       }
     });
   });
+// SEE 'TEST' FLIGHT ADDED AT: "http://localhost:8000/flights/5c51ce19c17c3a75af6f5e61"
+
 
 //EDIT FLIGHT:
 app.post('/flights', (req, res) => {
