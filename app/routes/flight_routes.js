@@ -1,12 +1,12 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
 
+// MIDDLEWARE TO OVERCOME CORS ISSUES WHEN LINKING TO LOCALHOSTS (8000 & 3000)
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
 
 // FIND ALL FLIGHTS:
 app.get('/flights', (req, res) => {
@@ -19,7 +19,6 @@ app.get('/flights', (req, res) => {
       });
     });
 // END POINT EXAMPLE: "localhost:8000/flights"
-
 
 // FIND ALL DEPARTURES:
 app.get('/flights/departures', (req, res) => {
@@ -34,7 +33,6 @@ app.get('/flights/departures', (req, res) => {
     });
 // END POINT EXAMPLE: "localhost:8000/flights/departures"
 
-
 // FIND ALL ARRIVALS:
 app.get('/flights/arrivals', (req, res) => {
   const type = "A"
@@ -47,7 +45,6 @@ app.get('/flights/arrivals', (req, res) => {
       });
     });
 // END POINT EXAMPLE: "localhost:8000/flights/arrivals"
-
 
 // FIND BY FLIGHT NUMBER:
 app.get('/flights/flight/:flightNo', (req, res) => {
@@ -62,7 +59,6 @@ app.get('/flights/flight/:flightNo', (req, res) => {
     });
 // END POINT EXAMPLE: "localhost:8000/flights/flight/UX3613"
 
-
 // FIND BY ID:
 app.get('/flights/:id', (req, res) => {
   const id = req.params.id;
@@ -76,7 +72,6 @@ app.get('/flights/:id', (req, res) => {
     });
   });
 // END POINT EXAMPLE: "localhost:8000/flights/5c51ba60f428dc3d24b05273"
-
 
 // ADD FLIGHT:
 app.put('/flights/:id', (req, res) => {
@@ -104,7 +99,6 @@ app.put('/flights/:id', (req, res) => {
     });
   });
 // SEE 'TEST' FLIGHT ADDED AT: "http://localhost:8000/flights/5c51ce19c17c3a75af6f5e61"
-
 
 //EDIT FLIGHT:
 app.post('/flights', (req, res) => {
